@@ -14,6 +14,8 @@ namespace DarkExplorer.Models
 
         public bool IsFile { get; set; }
 
+        public bool IsDirectory { get; set; }
+
         public string Name { get; set; }
 
         public string FullName { get; set; }
@@ -29,6 +31,7 @@ namespace DarkExplorer.Models
         private void Init(DirectoryInfo directoryInfo)
         {
             IsFile = false;
+            IsDirectory = true;
             Name = directoryInfo.Name;
             FullName = directoryInfo.FullName;
             if (directoryInfo.Parent != null)
@@ -37,20 +40,21 @@ namespace DarkExplorer.Models
             }
         }
 
-        public DirectoryFileInfo(FileInfo fileInfo)
-        {
-            Init(fileInfo);
-        }
-
         private void Init(FileInfo fileInfo)
         {
             IsFile = true;
+            IsDirectory = false;
             Name = fileInfo.Name;
             FullName = fileInfo.FullName;
             if (fileInfo.Directory != null)
             {
                 Parent = new DirectoryFileInfo(fileInfo.Directory);
             }
+        }
+
+        public DirectoryFileInfo(FileInfo fileInfo)
+        {
+            Init(fileInfo);
         }
 
         public DirectoryFileInfo(string currentPath)
@@ -62,7 +66,6 @@ namespace DarkExplorer.Models
             }
             else
             {
-
                 FileInfo fi = new FileInfo(currentPath);
                 Init(fi);
             }

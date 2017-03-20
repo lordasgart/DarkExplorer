@@ -45,6 +45,7 @@ namespace DarkExplorer
             try
             {
                 CurrentPath = path;
+                Error = string.Empty;
 
                 _directoryFileInfos.Clear();
 

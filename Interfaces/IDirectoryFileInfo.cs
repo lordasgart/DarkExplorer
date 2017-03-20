@@ -10,6 +10,8 @@ namespace DarkExplorer.Interfaces
     {
         bool IsFile { get; set; }
 
+        bool IsDirectory { get; set; }
+
         string Name { get; set; }
 
         string FullName { get; set; }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DarkExplorer"
         mc:Ignorable="d"
-        Title="Dark Explorer" Width="1000" Height="600" Style="{StaticResource {x:Type Window}}" Icon="darkfolder.ico">
+        Title="Dark Explorer" Width="1000" Height="600" Style="{StaticResource {x:Type Window}}" Icon="folder.ico">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

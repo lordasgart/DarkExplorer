@@ -31,5 +31,20 @@ namespace DarkExplorer
         {
             vm.Show();
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            vm.Back();
+        }
+
+        private void btnGo_Click(object sender, RoutedEventArgs e)
+        {
+            vm.ShowPath();
+        }
+
+        private void btnUp_Click(object sender, RoutedEventArgs e)
+        {
+            vm.Up();
+        }
     }
 }

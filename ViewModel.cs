@@ -14,6 +14,21 @@ namespace DarkExplorer
 {
     public class ViewModel : BindableBase
     {
+        private string _currentPath;
+        public string CurrentPath
+        {
+            get { return _currentPath; }
+            set { SetProperty(ref _currentPath, value); }
+        }
+
+        private string _error;
+        public string Error
+        {
+            get { return _error; }
+            set { SetProperty(ref _error, value); }
+        }
+
+
         ObservableCollection<IDirectoryFileInfo> _directoryFileInfos = new ObservableCollection<IDirectoryFileInfo>();
 
         public IDirectoryFileInfo SelectedDirectoryFileInfo { get; set; }
@@ -27,23 +42,49 @@ namespace DarkExplorer
 
         private void Show(string path)
         {
-            _directoryFileInfos.Clear();
-
-            var directories = Directory.GetDirectories(path);
-            foreach (var dir in directories)
+            try
             {
-                DirectoryInfo di = new DirectoryInfo(dir);
+                CurrentPath = path;
 
-                DirectoryFileInfos.Add(new DirectoryFileInfo(di));
+                _directoryFileInfos.Clear();
+
+                var directories = Directory.GetDirectories(path);
+                foreach (var dir in directories.OrderBy((s => s)))
+                {
+                    DirectoryInfo di = new DirectoryInfo(dir);
+
+                    DirectoryFileInfos.Add(new DirectoryFileInfo(di));
+                }
+
+                var fileNames = Directory.GetFiles(path);
+                foreach (var fileName in fileNames.OrderBy((s => s)))
+                {
+                    FileInfo fi = new FileInfo(fileName);
+
+                    DirectoryFileInfos.Add(new DirectoryFileInfo(fi));
+                }
             }
-
-            var fileNames = Directory.GetFiles(path);
-            foreach (var fileName in fileNames)
+            catch (Exception ex)
             {
-                FileInfo fi = new FileInfo(fileName);
-
-                DirectoryFileInfos.Add(new DirectoryFileInfo(fi));
+                Error = ex.ToString();
             }
+        }
+
+        internal void Up()
+        {
+            DirectoryFileInfo dfi = new DirectoryFileInfo(CurrentPath);
+            if (dfi.Parent != null)
+            Show(dfi.Parent.FullName);
+        }
+
+        internal void ShowPath()
+        {
+            Show(CurrentPath);
+        }
+
+        internal void Back()
+        {
+            //throw new NotImplementedException();
         }
 
         internal void Show()

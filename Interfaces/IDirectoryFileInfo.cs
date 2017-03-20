@@ -13,5 +13,7 @@ namespace DarkExplorer.Interfaces
         string Name { get; set; }
 
         string FullName { get; set; }
+
+        IDirectoryFileInfo Parent { get; set; }
     }
 }

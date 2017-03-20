@@ -5,8 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DarkExplorer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Dark Explorer" Height="350" Width="525" Style="{StaticResource {x:Type Window}}" Icon="darkfolder.ico">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <ListView Grid.Column="1" ItemsSource="{Binding DirectoryFileInfos}" MouseDoubleClick="ListView_MouseDoubleClick" SelectedItem="{Binding SelectedDirectoryFileInfo}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

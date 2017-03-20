@@ -20,9 +20,16 @@ namespace DarkExplorer
     /// </summary>
     public partial class MainWindow : Window
     {
+        ViewModel vm = new ViewModel();
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = vm;
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            vm.Show();
         }
     }
 }

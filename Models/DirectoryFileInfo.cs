@@ -22,6 +22,12 @@ namespace DarkExplorer.Models
 
         public IDirectoryFileInfo Parent { get; set; }
 
+        public long Length { get; set; }
+
+        public string Extension { get; set; }
+
+        public DateTime LastWriteTime { get; set; }
+
 
         public DirectoryFileInfo(DirectoryInfo directoryInfo)
         {
@@ -38,6 +44,9 @@ namespace DarkExplorer.Models
             {
                 Parent = new DirectoryFileInfo(directoryInfo.Parent);
             }
+
+            LastWriteTime = directoryInfo.LastWriteTime;
+            Extension = "DIR";
         }
 
         private void Init(FileInfo fileInfo)
@@ -50,6 +59,10 @@ namespace DarkExplorer.Models
             {
                 Parent = new DirectoryFileInfo(fileInfo.Directory);
             }
+
+            Length = fileInfo.Length;
+            Extension = fileInfo.Extension.ToLower();//.Replace(".","");
+            LastWriteTime = fileInfo.LastWriteTime;
         }
 
         public DirectoryFileInfo(FileInfo fileInfo)

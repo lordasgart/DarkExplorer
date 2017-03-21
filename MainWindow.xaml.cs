@@ -46,5 +46,48 @@ namespace DarkExplorer
         {
             vm.Up();
         }
+
+        private void btnPasteAndGo_Click(object sender, RoutedEventArgs e)
+        {
+            vm.CurrentPath = Clipboard.GetText();
+
+            vm.ShowPath();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOpen_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(vm.SelectedDirectoryFileInfo.FullName);
+        }
+
+        private void btnRevealInExplorer_Click(object sender, RoutedEventArgs e)
+        {            
+            string argument = "/select, \"" + vm.SelectedDirectoryFileInfo.FullName + "\"";
+
+            System.Diagnostics.Process.Start("explorer.exe", argument);
+        }
+
+        private void btnOpenWithCode_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string argument = "\"" + vm.SelectedDirectoryFileInfo.FullName + "\"";
+
+                System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Microsoft VS Code\Code2.exe", argument);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void FavoritesListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            vm.ShowFavorite();
+        }
     }
 }

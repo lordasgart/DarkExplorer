@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DarkExplorer
@@ -33,11 +35,33 @@ namespace DarkExplorer
 
         public IDirectoryFileInfo SelectedDirectoryFileInfo { get; set; }
 
+        private ObservableCollection<IDirectoryFileInfo> _favorites = new ObservableCollection<IDirectoryFileInfo>();
+        public ObservableCollection<IDirectoryFileInfo> Favorites
+        {
+            get { return _favorites; }
+            set { SetProperty(ref _favorites, value); }
+        }
+
+        public IDirectoryFileInfo SelectedFavorite { get; set; }
+
         public ViewModel()
         {
             string path = "C:\\";
 
             Show(path);
+
+
+            AddFavorite(@"C:\");
+            AddFavorite(@"C:\Users\malzma\OneDrive");
+            AddFavorite(@"C:\Users\malzma\Projects");
+            AddFavorite(@"C:\_svn\shelves");        
+            AddFavorite(@"C:\ProgramData\IT2media\SalesNetwork");                        
+        }
+
+        void AddFavorite(string path)
+        {
+            if (Directory.Exists(path))
+            Favorites.Add(new DirectoryFileInfo(path));
         }
 
         private void Show(string path)
@@ -69,6 +93,11 @@ namespace DarkExplorer
             {
                 Error = ex.ToString();
             }
+        }
+
+        internal void ShowFavorite()
+        {
+            Show(SelectedFavorite.FullName);
         }
 
         internal void Up()

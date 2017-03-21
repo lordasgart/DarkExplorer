@@ -17,5 +17,11 @@ namespace DarkExplorer.Interfaces
         string FullName { get; set; }
 
         IDirectoryFileInfo Parent { get; set; }
+
+        long Length { get; set; }
+
+        string Extension { get; set; }
+
+        DateTime LastWriteTime { get; set; }
     }
 }

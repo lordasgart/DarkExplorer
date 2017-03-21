@@ -24,21 +24,23 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Button Content="Up" Name="btnUp" Click="btnUp_Click" Padding="4" Grid.Column="0"></Button>
-            <TextBox Margin="4 1 4 1" Text="{Binding CurrentPath}" VerticalContentAlignment="Center" Grid.Column="1"></TextBox>
-            <Button Content="Go" Name="btnGo" Click="btnGo_Click" Padding="4" Grid.Column="2"></Button>
+            <TextBox Name="txtCurrentPath" Margin="4 1 4 1" Text="{Binding CurrentPath}" VerticalContentAlignment="Center" Grid.Column="1" FontFamily="Consolas"></TextBox>
+            <Button Content="Paste &amp; Go" Name="btnPasteAndGo" Click="btnPasteAndGo_Click" Padding="4" Grid.Column="2"></Button>
+            <Button Content="Go" Name="btnGo" Click="btnGo_Click" Padding="4" Grid.Column="3"></Button>
         </Grid>
         
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"></ColumnDefinition>
+                <ColumnDefinition Width="128"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Column="1" ItemsSource="{Binding DirectoryFileInfos}" MouseDoubleClick="ListView_MouseDoubleClick" SelectedItem="{Binding SelectedDirectoryFileInfo}">
+            <ListView Margin="4 0 2 0" Grid.Column="0" ItemsSource="{Binding Favorites}" Name="FavoritesListView" MouseDoubleClick="FavoritesListView_MouseDoubleClick" SelectedItem="{Binding SelectedFavorite}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -46,10 +48,46 @@
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+
+                            <Path Width="16" Height="16" Margin="4" Stretch="Uniform" Fill="DodgerBlue" Data="F1 M 0,10.6641L 10.1434,9.19012L 14.6797,-3.05176e-005L 19.2161,9.19012L 28.6251,10.5573L 29.3595,10.6641L 22.0196,17.8204L 23.7527,27.922L 14.6797,23.1511L 5.60684,27.922L 7.3399,17.8204L 0,10.6641 Z "/>
+
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center">
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView Grid.Column="1" ItemsSource="{Binding DirectoryFileInfos}" MouseDoubleClick="ListView_MouseDoubleClick" SelectedItem="{Binding SelectedDirectoryFileInfo}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="384"></ColumnDefinition>
+                                
+                                <ColumnDefinition Width="64"></ColumnDefinition>
+                                <ColumnDefinition Width="196"></ColumnDefinition>
+                                <ColumnDefinition Width="128"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
                             <Path Visibility="{Binding IsDirectory, Converter={StaticResource BooleanToVisibilityConverter}}" Width="16" Height="12" Margin="4 6 4 6" Stretch="Uniform" Fill="Goldenrod" UseLayoutRounding="False" Data="F1 M 0,6.9975C -0.0300293,6.5675 0.0212402,6.25378 0.153717,6.05627C 0.286194,5.85876 0.609985,5.76001 1.125,5.76001L 22.8975,5.76001C 23.4125,5.76001 23.7325,5.85876 23.8575,6.05627C 23.9825,6.25378 24.03,6.5675 24,6.9975L 22.995,17.9625C 22.96,18.3925 22.865,18.7063 22.71,18.9037C 22.555,19.1013 22.22,19.2 21.705,19.2L 2.31744,19.2C 1.80249,19.2 1.46747,19.1013 1.3125,18.9037C 1.15747,18.7063 1.05496,18.3925 1.00494,17.9625L 0,6.9975 Z M 2.01749,4.32001L 2.37,1.21503C 2.42996,0.855042 2.58875,0.5625 2.84622,0.337524C 3.1037,0.112549 3.38995,0 3.70499,0L 7.64249,0C 8.4375,0 9.125,0.287537 9.70499,0.862549L 10.3799,1.53754C 10.96,2.11255 11.6475,2.40002 12.4424,2.40002L 20.6475,2.40002C 20.9625,2.40002 21.2637,2.49377 21.5512,2.68127C 21.8387,2.86877 22.0225,3.09503 22.1025,3.35999L 22.335,4.32001L 2.01749,4.32001 Z "/>
                             <Path Visibility="{Binding IsFile, Converter={StaticResource BooleanToVisibilityConverter}}" Width="12" Height="16"  Margin="6 4 6 4" Fill="Silver"  Stretch="Uniform" Data="F1 M 0,3.05176e-005L 0,29.22L 23.94,29.22L 23.94,7.95331L 16.1561,3.05176e-005L 0,3.05176e-005 Z M 3.30002,3.30005L 14.4,3.30005L 14.4,9.06003L 20.64,9.06003L 20.64,25.92L 3.30002,25.92L 3.30002,3.30005 Z M 5.70001,13.0283L 18.24,13.0283L 18.24,14.4L 5.70001,14.4L 5.70001,13.0283 Z M 5.70001,16.74L 18.24,16.74L 18.24,18.24L 5.70001,18.24L 5.70001,16.74 Z M 5.70001,20.58L 18.24,20.58L 18.24,22.1218L 5.70001,22.1218L 5.70001,20.58 Z "/>
                             <!--<Path Width="105.334" Height="133.333" Stretch="Uniform" Fill="Black" Data="F1 M 74.9329,1.52588e-005L 0,1.52588e-005L 0,133.333L 105.334,133.333L 105.334,28.9531L 74.9329,1.52588e-005 Z M 77.334,13.3347L 91.334,26.6667L 77.334,26.6667L 77.334,13.3347 Z M 8,125.333L 8,8.00002L 69.334,8.00002L 69.334,34.6667L 97.334,34.6667L 97.334,125.333L 8,125.333 Z "/>-->
-                            <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                            
+                            <TextBlock Text="{Binding Name}" Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Reveal in Explorer" Name="btnRevealInExplorer" Click="btnRevealInExplorer_Click"/>
+                                        <Separator />
+                                        <MenuItem Header="Open" Name="btnOpen" Click="btnOpen_Click"/>
+                                        <MenuItem Header="Open with Code" Name="btnOpenWithCode" Click="btnOpenWithCode_Click"/>
+                                    </ContextMenu>
+                                </TextBlock.ContextMenu>                                
+                            </TextBlock>
+
+                            <TextBlock Text="{Binding Extension}" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding LastWriteTime}" Grid.Column="3" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Length}" Grid.Column="4" VerticalAlignment="Center"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

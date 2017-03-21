@@ -77,7 +77,7 @@ namespace DarkExplorer
             {
                 string argument = "\"" + vm.SelectedDirectoryFileInfo.FullName + "\"";
 
-                System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Microsoft VS Code\Code2.exe", argument);
+                System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Microsoft VS Code\Code.exe", argument);
             }
             catch (Exception ex)
             {

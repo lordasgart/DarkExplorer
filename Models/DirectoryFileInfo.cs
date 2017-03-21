@@ -60,7 +60,11 @@ namespace DarkExplorer.Models
                 Parent = new DirectoryFileInfo(fileInfo.Directory);
             }
 
-            Length = fileInfo.Length;
+            if (fileInfo.Exists)
+            {
+                Length = fileInfo.Length;
+            }
+
             Extension = fileInfo.Extension.ToLower();//.Replace(".","");
             LastWriteTime = fileInfo.LastWriteTime;
         }

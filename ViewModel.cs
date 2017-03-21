@@ -91,7 +91,7 @@ namespace DarkExplorer
             }
             catch (Exception ex)
             {
-                Error = ex.ToString();
+                Error = ex.Message.ToString();
             }
         }
 

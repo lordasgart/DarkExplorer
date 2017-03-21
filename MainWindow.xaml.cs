@@ -89,5 +89,13 @@ namespace DarkExplorer
         {
             vm.ShowFavorite();
         }
+
+        private void txtCurrentPath_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                vm.ShowPath();
+            }
+        }
     }
 }

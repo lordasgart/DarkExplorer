@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DarkExplorer"
         mc:Ignorable="d"
-        Title="Dark Explorer" Width="1000" Height="600" Style="{StaticResource {x:Type Window}}" Icon="folder.ico">
+        Title="{Binding CurrentPath}" Width="1000" Height="600" Style="{StaticResource {x:Type Window}}" Icon="folder.ico" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="96"></RowDefinition>
+            <RowDefinition Height="28"></RowDefinition>
             <RowDefinition Height="24"></RowDefinition>
         </Grid.RowDefinitions>
 
@@ -28,7 +28,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="Up" Name="btnUp" Click="btnUp_Click" Padding="4" Grid.Column="0"></Button>
-            <TextBox Name="txtCurrentPath" Margin="4 1 4 1" Text="{Binding CurrentPath}" VerticalContentAlignment="Center" Grid.Column="1" FontFamily="Consolas"></TextBox>
+            
+            <TextBox Name="txtCurrentPath" Margin="4 1 4 1" Text="{Binding CurrentPath, UpdateSourceTrigger=PropertyChanged}" VerticalContentAlignment="Center" Grid.Column="1" FontFamily="Consolas" KeyUp="txtCurrentPath_KeyUp"></TextBox>
+            
             <Button Content="Paste &amp; Go" Name="btnPasteAndGo" Click="btnPasteAndGo_Click" Padding="4" Grid.Column="2"></Button>
             <Button Content="Go" Name="btnGo" Click="btnGo_Click" Padding="4" Grid.Column="3"></Button>
         </Grid>
@@ -64,10 +66,9 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                <ColumnDefinition Width="384"></ColumnDefinition>
-                                
-                                <ColumnDefinition Width="64"></ColumnDefinition>
+                                <ColumnDefinition Width="256"></ColumnDefinition>                                
                                 <ColumnDefinition Width="196"></ColumnDefinition>
+                                <ColumnDefinition Width="64"></ColumnDefinition>
                                 <ColumnDefinition Width="128"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Path Visibility="{Binding IsDirectory, Converter={StaticResource BooleanToVisibilityConverter}}" Width="16" Height="12" Margin="4 6 4 6" Stretch="Uniform" Fill="Goldenrod" UseLayoutRounding="False" Data="F1 M 0,6.9975C -0.0300293,6.5675 0.0212402,6.25378 0.153717,6.05627C 0.286194,5.85876 0.609985,5.76001 1.125,5.76001L 22.8975,5.76001C 23.4125,5.76001 23.7325,5.85876 23.8575,6.05627C 23.9825,6.25378 24.03,6.5675 24,6.9975L 22.995,17.9625C 22.96,18.3925 22.865,18.7063 22.71,18.9037C 22.555,19.1013 22.22,19.2 21.705,19.2L 2.31744,19.2C 1.80249,19.2 1.46747,19.1013 1.3125,18.9037C 1.15747,18.7063 1.05496,18.3925 1.00494,17.9625L 0,6.9975 Z M 2.01749,4.32001L 2.37,1.21503C 2.42996,0.855042 2.58875,0.5625 2.84622,0.337524C 3.1037,0.112549 3.38995,0 3.70499,0L 7.64249,0C 8.4375,0 9.125,0.287537 9.70499,0.862549L 10.3799,1.53754C 10.96,2.11255 11.6475,2.40002 12.4424,2.40002L 20.6475,2.40002C 20.9625,2.40002 21.2637,2.49377 21.5512,2.68127C 21.8387,2.86877 22.0225,3.09503 22.1025,3.35999L 22.335,4.32001L 2.01749,4.32001 Z "/>
@@ -84,10 +85,11 @@
                                     </ContextMenu>
                                 </TextBlock.ContextMenu>                                
                             </TextBlock>
-
-                            <TextBlock Text="{Binding Extension}" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
-                            <TextBlock Text="{Binding LastWriteTime}" Grid.Column="3" VerticalAlignment="Center"></TextBlock>
-                            <TextBlock Text="{Binding Length}" Grid.Column="4" VerticalAlignment="Center"></TextBlock>
+                            
+                            <TextBlock Text="{Binding LastWriteTime}" Grid.Column="2" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="{Binding Extension}" Grid.Column="3" VerticalAlignment="Center"></TextBlock>
+                            
+                            <TextBlock Text="{Binding Length}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right"></TextBlock>
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

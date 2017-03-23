@@ -51,11 +51,10 @@ namespace DarkExplorer
             Show(path);
 
 
-            AddFavorite(@"C:\");
-            AddFavorite(@"C:\Users\malzma\OneDrive");
-            AddFavorite(@"C:\Users\malzma\Projects");
-            AddFavorite(@"C:\_svn\shelves");        
-            AddFavorite(@"C:\ProgramData\IT2media\SalesNetwork");                        
+            foreach (var favorite in Properties.Settings.Default.Favorites)
+            {
+                AddFavorite(favorite);
+            }            
         }
 
         void AddFavorite(string path)
